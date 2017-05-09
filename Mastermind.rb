@@ -1,18 +1,15 @@
-#4 Holes, 6 Colors, 12 Tries
-
 class Code
 	attr_reader :code, :color_code
-	attr_writer :guess, :code
+	attr_writer :guess, :code, :color_code
 	def initialize
 		@code = []
 		@guess = []
-		@@color_code = {1 => :Blue, 2 => :Red, 3 => :Yellow, 
-			4 => :Green, 5 => :Purple}
+		@@color_code = {1 => :Blue, 2 => :Red, 3 => :Purple, 4 => :Green, 5 => :Yellow}
 	end
 	
 	def generate_code(number=4)
 		while @code.length < number
-			@code << rand(1...5)
+			@code << rand(1..5)
 		end
 		return @code
 	end
@@ -26,18 +23,14 @@ class Code
 		response = []
 		exact = 0
 		removeforclose = @code & guess
-		#codeclone = codeclone - removeforclose
+		codeclone = codeclone - removeforclose
 		guess.each_with_index do |i, index|
 			if i == @code[index]
 				exact += 1
 				response << i
-				#codeclone.delete_at(index)
-
-			elsif removeforclose.include? i 
-				response << "c"
-				#codeclone.delete_at(index)
+			
 			else
-				response << "."
+				response << false
 			end
 		end
 		return exact,response
@@ -167,6 +160,7 @@ class NewGame
 end
 
 class SetupGame
+
 	def setup
 		puts "Would you like to guess the code or create it? Type 1 to guess, 2 to create"
 		choice = gets.chomp.to_i
@@ -182,7 +176,8 @@ class SetupGame
 			puts "Sorry, you didn't choose 1 or 2"
 		end
 	end
+
 end
-newgame = SetupGame.new
-newgame.setup
+# newgame = SetupGame.new
+# newgame.setup
 
